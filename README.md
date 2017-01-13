@@ -1,5 +1,8 @@
-# F1tenth-Caffe
+# F1tenth
 
-## Adaptive object recognition using Caffe on the F1tenth Self-Driving Car.
+## F1tenth competition
 
-Please refer to the project Wiki page for documentation
+## BRASS demo
+
+## Adaptive control using Caffe
+
