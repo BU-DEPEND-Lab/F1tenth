@@ -21,7 +21,8 @@ def callback(data):
 	pwm1 = arduino_map(velocity,-100,100,6554,13108);
 	pwm2 = arduino_map(angle,-100,100,6554,13108);
 	msg = drive_values()
-	msg.pwm_drive = pwm1
+	#msg.pwm_drive = pwm1
+	msg.pwm_drive = 9950 
 	msg.pwm_angle = pwm2
 	pub.publish(msg)
 

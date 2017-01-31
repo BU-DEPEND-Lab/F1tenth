@@ -38,6 +38,7 @@ def callback(data):
 	CD = AB + AC * np.sin(alpha)
 	error = CD - 1
 	frontDist = getRange(data, omega)
+	print('fontdist=', frontDist)
 	if frontDist <= 1:
 		vel = 0
 	else:

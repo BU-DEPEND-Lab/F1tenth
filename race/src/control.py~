@@ -10,7 +10,7 @@ servo_offset = 18.5
 prev_error = 0.0
 kp = 14.0
 kd = 0.09
-#vel_input = 5.0
+vel_input = 5.0
 pub = rospy.Publisher('drive_parameters', drive_param, queue_size=1)
 #stdscr = curses.initscr() # kill
 
@@ -42,21 +42,20 @@ def control(data):
 	## END
 
 	msg = drive_param();
-	msg.velocity = data.pid_vel	
+	msg.velocity = data.pid_vel #	
 	msg.angle = angle
-	print(angle)
-	print(data.pid_vel)
 	pub.publish(msg)
-	#curses.endwin()
+	curses.endwin()
 	
 
 if __name__ == '__main__':
-	'''global kp
+	global kp
 	global kd
+	global vel_input
 	print("Listening to error for PID")
 	kp = input("Enter Kp Value: ")
 	kd = input("Enter Kd Value: ")
-	#vel_input = input("Enter Velocity: ")'''
+	vel_input = input("Enter Velocity: ")
 	rospy.init_node('pid_controller', anonymous=True)
 	rospy.Subscriber("error", pid_input, control)
 	rospy.spin()
