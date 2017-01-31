@@ -16,7 +16,6 @@ ssh ubuntu@192.168.1.1
 password:ubuntu
 
 Lidar:
-roscore
 rosrun urg_node urg_node _ip_address:=192.168.1.11
 
 IMU:
@@ -24,26 +23,22 @@ roslaunch razor_imu_9dof razor-pub.launch
 
 scp：
 sudo scp ubuntu@192.168.1.1:~/Desktop/rosgraph.png /home/Desktop
-sudo scp ~/Desktop ubuntu@192.168.1.1:~/Desktop/rosgraph.png 
+sudo scp /home/Desktop ubuntu@192.168.1.1:~/Desktop/rosgraph.png
 
 GPU Util:
 sudo ./tegrastats
 
-sd card directory:
-/media/ubuntu/bc269b87-e580-431d-8779-a423f17ff2cf
-
-ubuntu commands:
-mkdir newdir
-mv old new
-
 PID control:
 roscore
-rosrun urg_node urg_node _ip_address:=192.168.1.11
-cd ~/catkin_ws
+cd catkin_ws
 source ./devel/setup.bash
 rosrun rosserial_python serial_node.py /dev/ttyACM0
+rosrun urg_node urg_node _ip_address:=192.168.1.11
 rosrun race talker.py
 rosrun race control.py
 rosrun race dist_finder.py
 
+Joystick:
+sudo xboxdrv --detach-kernel-driver
+rosrun joy joy_node
 
