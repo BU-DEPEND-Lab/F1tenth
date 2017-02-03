@@ -42,3 +42,5 @@ Joystick:
 sudo xboxdrv --detach-kernel-driver
 rosrun joy joy_node
 
+rosbag:
+rosbag record -o /media/ubuntu/bc269b87-e580-431d-8779-a423f17ff2cf1/ -a
