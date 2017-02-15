@@ -3,6 +3,11 @@
 ## F1tenth competition
 
 ## BRASS demo
+Since there isn't GPS in the F1_tenth system, we have to modified the ekf node in order to make it work with our system. The modified code is in the folder modified_from_brass.
+ 
+Copy ekf.py and replace the one in the folder BRASS/models/brass/src/navigation_phase1/phase1A_v2. 
+
+Copy adapter.py and replace the one in BRASS/models/brass/src/controller/monitor
 
 ## Adaptive control using Caffe
 
@@ -22,3 +27,8 @@ Then use the command to another directory:
 roscd hector_mapping/launch
 
 repalce the mapping_defualt.launch with the one in the Slam_launch folder.
+
+then simply run the the launch file using the command:
+roslaunch hector_slam_launch tutorial.launch
+
+this launch file will launch all nodes we are using in f1_tenth
