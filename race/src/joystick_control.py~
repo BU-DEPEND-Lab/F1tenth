@@ -9,7 +9,6 @@ import signal
 global forward
 global left
 global a
-global terminated
 forward = 0
 left = 0
 rospy.init_node('keyboard_talker', anonymous=True)
@@ -27,8 +26,6 @@ def control(data):
 	global forward
 	global left
         global a
-        global terminated
-        terminated = False
 	button = data.buttons
 	axes = data.axes
         ''' if button[1] == 1:
@@ -68,9 +65,7 @@ def control(data):
 		print('absds')
                 rospy.loginfo('stopped recording')
 		#os.killpg(os.getpgid(a.pid), signal.SIGINT)
-                if not terminated:
-                  terminate_process_and_children(a)
-                  terminated = True
+		terminate_process_and_children(a)
 	msg = drive_param()
         msg.velocity = forward 
         msg.angle = left

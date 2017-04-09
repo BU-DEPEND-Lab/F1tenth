@@ -16,13 +16,20 @@ def arduino_map(x, in_min, in_max, out_min, out_max):
 def callback(data):
 	velocity = data.velocity
 	angle = data.angle
-	print("Velocity: ",velocity,"Angle: ",angle)
+        # forward and backward offset
+        if (velocity < 0):
+            velocity -= 10.1
+        if (velocity > 0):  
+            velocity += 6.1
+        angle += 0
+ 	#print("Velocity: ",velocity,"Angle: ",angle)
 	# Do the computation
 	pwm1 = arduino_map(velocity,-100,100,6554,13108);
-	pwm2 = arduino_map(angle,-100,100,6554,13108);
+	pwm2 = arduino_map(angle,-100,100,7619,12836);
 	msg = drive_values()
 	msg.pwm_drive = pwm1
 	msg.pwm_angle = pwm2
+        print("pwm drive:",pwm1,"pwm angle:",pwm2)
 	pub.publish(msg)
 
 def talker():

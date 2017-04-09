@@ -9,7 +9,6 @@ import signal
 global forward
 global left
 global a
-global terminated
 forward = 0
 left = 0
 rospy.init_node('keyboard_talker', anonymous=True)
@@ -27,8 +26,6 @@ def control(data):
 	global forward
 	global left
         global a
-        global terminated
-        terminated = False
 	button = data.buttons
 	axes = data.axes
         ''' if button[1] == 1:
@@ -57,7 +54,7 @@ def control(data):
 	decelerate = abs(axes[5] - 1) * 5
 	forward = accelerate - decelerate
         if button[7] == 1:
-                cmd = "rosbag record -O /media/ubuntu/bc269b87-e580-431d-8779-a423f17ff2cf2/joy_slam ekf_pub_off ekf_pub_on slam_out_pose"
+                cmd = "rosbag record -O /media/ubuntu/bc269b87-e580-431d-8779-a423f17ff2cf2/joy_adaptor_on ekf_pub slam_out_pose"
                 rospy.loginfo("recording_bags")
                 a = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid) 
                 rospy.loginfo(datetime.datetime.now())
@@ -68,9 +65,7 @@ def control(data):
 		print('absds')
                 rospy.loginfo('stopped recording')
 		#os.killpg(os.getpgid(a.pid), signal.SIGINT)
-                if not terminated:
-                  terminate_process_and_children(a)
-                  terminated = True
+		terminate_process_and_children(a)
 	msg = drive_param()
         msg.velocity = forward 
         msg.angle = left
