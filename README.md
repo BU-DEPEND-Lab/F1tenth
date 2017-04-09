@@ -9,6 +9,8 @@ Copy ekf.py and replace the one in the folder BRASS/models/brass/src/navigation_
 
 Copy adapter.py and replace the one in BRASS/models/brass/src/controller/monitor
 
+All the launch file used in mit demo are in zed-ros-wrapper/launch folder. Modified ekf and adapter are in modified_from_brass folder. race/src/ folder adds a drive straight for 5 seconds node and a fakeGps node.
+
 ## Adaptive control using Caffe
 
 ## Using Slam with lidar:
