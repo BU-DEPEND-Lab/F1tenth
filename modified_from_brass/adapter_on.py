@@ -23,7 +23,7 @@ weights_wz = np.zeros((N,1) )
 P_x = np.eye(N,N)*0.9
 P_y = np.eye(N,N)*0.9
 P_wz = np.eye(N,N)*0.9
-adapt_on = 0  	# adaptation off by default
+adapt_on = 1  	# adaptation off by default
 useZeroValue = True
 converged = False
 NUM_SAMPLES = 20 # to compute running average, approximately
@@ -155,9 +155,9 @@ def main():
     '''publish adapted IMU'''
     global imu_adapted_pub
     # global g_get_state		# ASHISH: Checking if giving TRUE state helps!
-    rospy.init_node('imu_virtual_generator', anonymous=True)
-    imu_adapted_pub = rospy.Publisher('/imu_virtual', Imu, queue_size = 1)
-    rospy.Subscriber("/ekf_pub", ekfparam, callbackEKF)
+    rospy.init_node('imu_virtual_generator_on', anonymous=True)
+    imu_adapted_pub = rospy.Publisher('/imu_virtual_on', Imu, queue_size = 1)
+    rospy.Subscriber("/ekf_pub_on", ekfparam, callbackEKF)
     #rospy.Subscriber("/imu_data", Imu, IMUCallback)     # For gazebo
     rospy.Subscriber("/imu", Imu, IMUCallback)      # For segway rmp
     # ASHISH: Remove lines below
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     #if len(sys.argv) > 1:
     #   adapt_on = int(sys.argv[1])
     #else:
-    adapt_on = 0
+    adapt_on = 1
     val = 'ON' if adapt_on > 0 else 'OFF'
     print  'Started IMU Adapter; adaptation is {0}'.format(val)
     lock = threading.Lock()

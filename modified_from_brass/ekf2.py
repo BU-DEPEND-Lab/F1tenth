@@ -94,7 +94,7 @@ PE_IDX, PN_IDX, VX_IDX, VXOLD_IDX, HDG_IDX, HDGDOT_IDX = range(N)
 # ----------------------------------------------------------------------
 def GPSPosreceived( msg ):
     global gps_read, gps_write, gps_first_read, both_done, moved_at_all
-    easting,northing = msg.pose.pose.position.y, msg.pose.pose.position.x # convert WGS84 to UTM
+    easting,northing = -msg.pose.position.y, msg.pose.position.x # convert WGS84 to UTM
 
     #print easting, northing
     gps_pos_ts = float(msg.header.stamp.secs) + (float(msg.header.stamp.nsecs)/1000000000.0)
@@ -154,14 +154,15 @@ def GPSVelreceived( msg ):
 
 # ----------------------------------------------------------------------
 def OdometryMeasurementAvailable( msg ):
-    global odo_read, odo_write, R
+    global odo_read, odo_write
 
     #Vmy = float(msg.twist.twist.linear.y)
-    VX_body = float(msg.twist.twist.linear.x)
+    #VX_body = msg.pose.position.x
+    VX_body = msg.speed[0]
     odo_write['t'] = float(msg.header.stamp.secs) + (float(msg.header.stamp.nsecs)/1000000000.0)
     odo_write['VXb'] = VX_body
-    odo_write['wz'] = float(msg.twist.twist.angular.z)
-    odo_read, odo_write = odo_write, odo_read
+    odo_write['wz'] = float(msg.pose.orientation.z)
+    odo_read, odo_write  = odo_write, odo_read
 
     # Segway does not publish /gps_velocity_fix; so, GPSVelreceived  never called; hence we do it here
     #print 'o', msg.twist.twist.angular.z, msg.twist.twist.linear.x
@@ -366,9 +367,9 @@ if __name__=="__main__":
     #Publish to ekf statistics
     ekf_pub = rospy.Publisher('/ekf_pub', ekfparam, queue_size = 1)
     #rospy.Subscriber("/odom", Odometry, OdometryMeasurementAvailable)   # /rmp/odom
-    rospy.Subscriber("/zed/odom", Odometry, OdometryMeasurementAvailable)   # /rmp/odom
+    rospy.Subscriber("/slam_odometry", odometry, OdometryMeasurementAvailable)   # /rmp/odom
     #rospy.Subscriber("/rmp/odom", Odometry, OdometryMeasurementAvailable)   # /rmp/odom
-    rospy.Subscriber("/zed/odom", Odometry, GPSPosreceived)             # /gps/fix
+    rospy.Subscriber("/slam_out_pose2", PoseStamped, GPSPosreceived)             # /gps/fix
     rospy.Subscriber("/imu_virtual", Imu, IMU1MeasurementAvailable)     # /imu/imu -> virtual
     #rospy.Subscriber("/imu", Imu, IMU1MeasurementAvailable)     # /imu/imu -> virtual
     #rospy.Subscriber("/cmd_vel", Twist, CallbackCmdVel)                 # /rmp/base/vel_cmd, but not used so comment out.
