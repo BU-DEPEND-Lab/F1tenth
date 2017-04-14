@@ -9,8 +9,10 @@ Copy ekf.py and replace the one in the folder BRASS/models/brass/src/navigation_
 
 Copy adapter.py and replace the one in BRASS/models/brass/src/controller/monitor
 
-## Adaptive control using Caffe
+All the launch file used in mit demo are in zed-ros-wrapper/launch folder. Modified ekf and adapter are in modified_from_brass folder. race/src/ folder adds a drive straight for 5 seconds node and a fakeGps node.
 
+## Adaptive control using Caffe
+zed-ros-wrapper folder is for driving the zed camera in ros. Just simply put it in a catkin workspace and make it.
 ## Using Slam with lidar:
 This is for sending the raw data from lidar to the hector_slam node and generate map for surrounding enviroment. If you want to replay a ros_bag, please change the parameter "/use_sim_time" to Ture in tutorial.launch.
 
