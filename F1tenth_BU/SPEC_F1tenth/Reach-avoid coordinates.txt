@@ -1,0 +1,14 @@
+Wall Position
+(-5.315, -5.269)
+(-2.236, -2.566)
+(3.030, -2.374)
+(5.142,-5.591)
+
+Initial Position
+(-4.5, -4)
+
+Barrel Position
+(-1, -4) +- 0.25
+
+Destination
+(4, -4)
